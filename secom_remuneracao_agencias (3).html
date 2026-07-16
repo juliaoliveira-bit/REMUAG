@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Remuneração de Agências de Propaganda — SECOM</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --blue-900:#071D41;
+  --blue-700:#1351B4;
+  --blue-500:#2670E8;
+  --blue-100:#E6EEF9;
+  --green-600:#0F8A4A;
+  --amber-600:#B8860B;
+  --amber-100:#FBF1DA;
+  --paper:#EEEFF0;
+  --card:#FFFFFF;
+  --ink-900:#101820;
+  --ink-600:#4A5560;
+  --ink-400:#889199;
+  --line:#DCDDDF;
+  --radius:14px;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(7,29,65,0.055) 1px, transparent 0);
+  background-size:22px 22px;
+  color:var(--ink-900);
+  font-family:'Inter',-apple-system,sans-serif;
+  min-height:100vh;
+  padding-bottom:60px;
+}
+
+/* ---------- HEADER ---------- */
+header{
+  background:var(--paper);
+  color:var(--ink-900);
+  padding:36px 24px 44px;
+  position:relative;
+  overflow:hidden;
+}
+header::after{
+  content:"";
+  position:absolute;
+  right:-60px; top:-60px;
+  width:280px;height:280px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(19,81,180,0.10), transparent 70%);
+}
+.header-inner{
+  max-width:1180px;
+  margin:0 auto;
+  position:relative;
+}
+h1{
+  font-family:'Source Serif 4',serif;
+  font-weight:700;
+  font-size:clamp(26px,3.4vw,38px);
+  line-height:1.15;
+  margin:0 0 6px;
+  max-width:760px;
+  position:relative;
+  color:var(--blue-700);
+}
+h1 em{font-style:normal;color:var(--blue-900);}
+.subtitle{
+  color:var(--ink-600);
+  font-size:15px;
+  max-width:640px;
+  margin:0;
+  position:relative;
+}
+
+/* ---------- KPI STRIP ---------- */
+.kpis{
+  max-width:1180px;
+  margin:-30px auto 0;
+  padding:0 24px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  position:relative;
+  z-index:2;
+}
+.kpi{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:16px 18px;
+  box-shadow:0 10px 26px -14px rgba(7,29,65,.35);
+  border:1px solid var(--line);
+}
+.kpi .num{
+  font-family:'Source Serif 4',serif;
+  font-size:23px;font-weight:700;color:var(--blue-900);
+  line-height:1.1;
+}
+.kpi .lbl{font-size:12px;color:var(--ink-600);margin-top:4px;font-weight:500;}
+
+/* ---------- TABS ---------- */
+.tabs-wrap{
+  max-width:1180px;margin:34px auto 0;padding:0 24px;
+}
+.tabs{
+  display:inline-flex;background:var(--card);border:1px solid var(--line);
+  border-radius:999px;padding:4px;gap:2px;
+}
+.tab-btn{
+  border:none;background:transparent;padding:10px 20px;border-radius:999px;
+  font-family:inherit;font-size:13.5px;font-weight:700;color:var(--ink-600);
+  cursor:pointer;transition:background .15s, color .15s;
+}
+.tab-btn.active{background:var(--blue-700);color:#fff;}
+
+/* ---------- CONTROLS ---------- */
+.controls-wrap{
+  max-width:1180px;margin:20px auto 0;padding:0 24px;
+}
+.controls{
+  display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+}
+.search-box{
+  flex:1 1 320px;position:relative;
+}
+.search-box input{
+  width:100%;
+  padding:13px 16px 13px 42px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--card);
+  font-size:14px;
+  font-family:inherit;
+  color:var(--ink-900);
+  outline:none;
+  transition:border-color .15s, box-shadow .15s;
+}
+.search-box input:focus{border-color:var(--blue-500);box-shadow:0 0 0 3px var(--blue-100);}
+.search-box svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);opacity:.45;}
+
+select{
+  padding:13px 38px 13px 16px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--card) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="%23636F7A" stroke-width="1.6" stroke-linecap="round"/></svg>') no-repeat right 16px center;
+  appearance:none;
+  font-family:inherit;
+  font-size:14px;
+  color:var(--ink-900);
+  outline:none;
+  cursor:pointer;
+  min-width:220px;
+}
+select:focus{border-color:var(--blue-500);}
+
+/* ---------- MULTI-SELECT (checkbox dropdown) ---------- */
+.ms-filter{position:relative;}
+.ms-btn{
+  padding:13px 38px 13px 16px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:var(--card) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1L6 6L11 1" stroke="%23636F7A" stroke-width="1.6" stroke-linecap="round"/></svg>') no-repeat right 16px center;
+  font-family:inherit;
+  font-size:14px;
+  color:var(--ink-900);
+  outline:none;
+  cursor:pointer;
+  min-width:220px;
+  text-align:left;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  display:inline-block;
+}
+.ms-btn:focus, .ms-filter.open .ms-btn{border-color:var(--blue-500);box-shadow:0 0 0 3px var(--blue-100);}
+.ms-panel{
+  display:none;
+  position:absolute;top:calc(100% + 6px);left:0;z-index:20;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  box-shadow:0 16px 34px -16px rgba(7,29,65,.35);
+  min-width:280px;max-width:360px;max-height:320px;overflow-y:auto;
+  padding:8px;
+}
+.ms-filter.open .ms-panel{display:block;}
+.ms-actions{display:flex;gap:8px;padding:4px 6px 8px;border-bottom:1px solid var(--line);margin-bottom:4px;}
+.ms-actions button{
+  border:none;background:transparent;color:var(--blue-700);font-weight:600;
+  font-family:inherit;font-size:12.5px;cursor:pointer;padding:2px 4px;
+}
+.ms-option{
+  display:flex;align-items:center;gap:9px;
+  padding:7px 6px;border-radius:8px;cursor:pointer;font-size:13.5px;color:var(--ink-900);
+}
+.ms-option:hover{background:var(--blue-100);}
+.ms-option input{cursor:pointer;}
+
+.count-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin:22px 2px 14px;
+  font-size:13px;color:var(--ink-600);
+}
+.count-row b{color:var(--blue-900);font-weight:700;}
+.sort-select{
+  border:none;background:transparent;color:var(--blue-700);font-weight:600;
+  font-family:inherit;font-size:13px;cursor:pointer;
+}
+
+/* ---------- GRID / CARDS ---------- */
+.grid{
+  max-width:1180px;margin:0 auto;padding:0 24px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:18px;
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s;
+  position:relative;
+  display:flex;flex-direction:column;gap:12px;
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 16px 30px -18px rgba(7,29,65,.4);
+  border-color:#C8D6ED;
+}
+.badge{
+  display:inline-flex;align-items:center;
+  background:var(--blue-100);color:var(--blue-700);
+  font-size:11px;font-weight:800;letter-spacing:.03em;
+  padding:5px 10px;border-radius:7px;
+  align-self:flex-start;
+}
+.card-expand{
+  position:absolute;top:14px;right:14px;
+  width:26px;height:26px;border-radius:50%;
+  background:var(--blue-100);color:var(--blue-700);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;line-height:1;
+  pointer-events:none;
+  transition:background .15s, color .15s;
+}
+.card:hover .card-expand{background:var(--blue-700);color:#fff;}
+.card-title{font-size:16px;font-weight:700;color:var(--ink-900);line-height:1.3;}
+.card-agency{font-size:13px;color:var(--ink-600);margin-top:-6px;}
+.card-agency-list{display:flex;flex-direction:column;gap:3px;margin-top:-4px;}
+.card-agency-item{font-size:13px;color:var(--ink-600);}
+.card-divider{height:1px;background:var(--line);margin:0;}
+.card-bottom{display:flex;justify-content:space-between;align-items:flex-end;}
+.card-value-lbl{font-size:11px;color:var(--ink-400);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+.card-value{font-family:'Source Serif 4',serif;font-size:19px;font-weight:700;color:var(--blue-900);}
+.status-tags{display:flex;gap:6px;}
+.tag{
+  font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:999px;letter-spacing:.02em;
+}
+.tag.vigente{background:#E5F5EA;color:var(--green-600);}
+.tag.encerrado{background:#F0EEE7;color:var(--ink-400);}
+.tag.contrato{background:var(--amber-100);color:var(--amber-600);}
+
+.empty{
+  text-align:center;padding:70px 20px;color:var(--ink-400);
+  grid-column:1/-1;
+}
+.empty svg{opacity:.35;margin-bottom:14px;}
+
+/* ---------- SERVICE VIEW ---------- */
+.service-intro{
+  max-width:1180px;margin:0 auto;padding:0 24px 6px;
+  font-size:13px;color:var(--ink-600);
+}
+.service-list{
+  max-width:1180px;margin:0 auto;padding:0 24px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.service-row{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:14px 18px;display:flex;align-items:center;gap:16px;
+  cursor:pointer;transition:border-color .15s, transform .15s;
+}
+.service-row:hover{border-color:#C8D6ED;transform:translateX(2px);}
+.service-row .sr-org{flex:1 1 auto;min-width:0;}
+.service-row .sr-org .name{font-weight:700;font-size:14.5px;color:var(--ink-900);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.service-row .sr-org .agency{font-size:12.5px;color:var(--ink-600);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.service-row .sr-value{
+  flex:0 0 auto;text-align:right;min-width:150px;
+}
+.service-row .sr-value .v{
+  font-family:'Source Serif 4',serif;font-weight:700;font-size:18px;color:var(--blue-700);
+}
+.service-row .sr-value .lbl{font-size:10.5px;color:var(--ink-400);text-transform:uppercase;letter-spacing:.04em;}
+.sr-badge{
+  flex:0 0 auto;
+  background:var(--blue-100);color:var(--blue-700);
+  font-size:11px;font-weight:800;padding:5px 10px;border-radius:7px;
+}
+
+/* ---------- MODAL ---------- */
+.overlay{
+  position:fixed;inset:0;background:rgba(7,15,29,.55);
+  backdrop-filter:blur(2px);
+  display:none;align-items:flex-start;justify-content:center;
+  padding:5vh 16px;z-index:100;overflow-y:auto;
+}
+.overlay.open{display:flex;}
+.modal{
+  background:var(--card);border-radius:18px;max-width:720px;width:100%;
+  padding:0;box-shadow:0 30px 70px -20px rgba(0,0,0,.4);
+  animation:pop .18s ease;
+}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:none;}}
+.modal-head{
+  background:linear-gradient(135deg,var(--blue-900),#123C7A);
+  color:#fff;padding:26px 28px;border-radius:18px 18px 0 0;position:relative;
+}
+.modal-close{
+  position:absolute;top:18px;right:18px;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,.15);border:none;color:#fff;
+  font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+}
+.modal-close:hover{background:rgba(255,255,255,.28);}
+.modal-badge{display:inline-block;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:7px;font-size:11px;font-weight:800;letter-spacing:.03em;margin-bottom:10px;}
+.modal-org{font-family:'Source Serif 4',serif;font-size:21px;font-weight:700;margin:0 0 4px;padding-right:40px;}
+.modal-agency{font-size:14px;color:#B9CBE6;margin:0;}
+
+.modal-body{padding:22px 28px 28px;}
+.section-title{
+  font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--blue-700);margin:22px 0 10px;
+}
+.section-title:first-child{margin-top:0;}
+.field-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px 18px;
+}
+.field{
+  border-bottom:1px dashed var(--line);
+  padding-bottom:8px;
+}
+.field .k{font-size:11.5px;color:var(--ink-400);margin-bottom:2px;}
+.field .v{font-size:13.5px;color:var(--ink-900);font-weight:600;word-break:break-word;}
+.pct-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+}
+.pct-chip{
+  background:var(--paper);border:1px solid var(--line);border-radius:10px;
+  padding:10px 12px;
+}
+.pct-chip .k{font-size:10.5px;color:var(--ink-600);line-height:1.3;margin-bottom:5px;}
+.pct-chip .v{font-family:'Source Serif 4',serif;font-size:16px;font-weight:700;color:var(--blue-900);word-break:break-word;}
+
+@media (max-width:720px){
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .field-grid{grid-template-columns:1fr;}
+  .pct-grid{grid-template-columns:repeat(2,1fr);}
+  .service-row{flex-wrap:wrap;}
+  .service-row .sr-value{text-align:left;min-width:0;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <h1>Anunciantes do Poder Executivo Federal — Remuneração de <em>Agências de Propaganda</em></h1>
+    <p class="subtitle">Consulta de contratos vigentes de publicidade firmados por órgãos e entidades do Poder Executivo Federal com agências de propaganda.</p>
+  </div>
+</header>
+
+<div class="kpis" id="kpis"></div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="contratos">Contratos</button>
+    <button class="tab-btn" data-tab="servicos">Buscar por serviço</button>
+  </div>
+</div>
+
+<!-- CONTRATOS TAB -->
+<div id="tab-contratos">
+  <div class="controls-wrap">
+    <div class="controls">
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.2" stroke="#4A5560" stroke-width="1.6"/><path d="M11 11L14.5 14.5" stroke="#4A5560" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input id="search" type="text" placeholder="Buscar por órgão, agência ou CNPJ…">
+      </div>
+      <div class="ms-filter" id="orgFilterWrap">
+        <button type="button" class="ms-btn" id="orgFilterBtn">Todos os órgãos</button>
+        <div class="ms-panel" id="orgFilterPanel"></div>
+      </div>
+      <select id="statusFilter">
+        <option value="">Todos os status</option>
+        <option value="vigente">Vigente</option>
+        <option value="encerrado">Encerrado</option>
+      </select>
+      <select id="valueFilter"><option value="">Todos os valores originais</option></select>
+    </div>
+    <div class="count-row">
+      <span><b id="resultCount">0</b> contratos</span>
+      <select class="sort-select" id="sortSelect">
+        <option value="orgao">Ordenar por órgão</option>
+        <option value="valorDesc">Maior valor</option>
+        <option value="valorAsc">Menor valor</option>
+        <option value="vencimento">Vencimento mais próximo</option>
+      </select>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- SERVIÇOS TAB -->
+<div id="tab-servicos" style="display:none;">
+  <div class="controls-wrap">
+    <div class="controls">
+      <select id="serviceSelect"></select>
+      <div class="search-box">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.2" stroke="#4A5560" stroke-width="1.6"/><path d="M11 11L14.5 14.5" stroke="#4A5560" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <input id="serviceSearch" type="text" placeholder="Buscar órgão ou agência…">
+      </div>
+    </div>
+    <div class="count-row">
+      <span><b id="serviceResultCount">0</b> contratos com essa cláusula</span>
+    </div>
+  </div>
+  <div class="service-intro" id="serviceDescription"></div>
+  <div class="service-list" id="serviceList" style="margin-top:14px;"></div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+const DATA = [{"orgao": "Autoridade Portuária de Santos S.A.", "sigla": "Porto de Santos", "agencia": "Oficina de Idéias Publicidade LTDA", "siglaAgencia": "Oficina", "cnpj": "00.978.294/0001-20", "licitacao": "08/2021", "contrato": "067/2022", "valorOriginal": 2200000.0, "valorAtualizado": 2750000.0, "inicioContratoOriginal": "11/08/2022", "limiteVigenciaTotal": "11/08/2027", "inicioVigenciaAtual": "01/12/2025", "terminoVigenciaAtual": "30/11/2026", "custosInternos": "30%", "repasseDescontoPadrao": "0", "honorariosSemDescontoVeiculo": "5%", "honorariosPesquisaAvaliacao": "5%", "honorariosRenovacaoDireitoAutoral": "5%", "honorariosReimpressaoPecas": "5%", "honorariosFormasInovadoras": "5%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco Central - BACEN", "sigla": "BACEN", "agencia": "Binder Comunicação", "siglaAgencia": "Binder", "cnpj": "72.190.242/0003-68", "licitacao": "72/2020", "contrato": "50269/2023", "valorOriginal": 30000000.0, "valorAtualizado": 30000000.0, "inicioContratoOriginal": "04/04/2023", "limiteVigenciaTotal": "03/04/2029", "inicioVigenciaAtual": "04/04/2026", "terminoVigenciaAtual": "03/04/2027", "custosInternos": "100%", "repasseDescontoPadrao": "5%", "honorariosSemDescontoVeiculo": "0%", "honorariosPesquisaAvaliacao": "0%", "honorariosRenovacaoDireitoAutoral": "0%", "honorariosReimpressaoPecas": "0%", "honorariosFormasInovadoras": "0%", "honorariosPlataformasDigitais": "Sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco da Amazônia", "sigla": "BASA", "agencia": "Escala Comunicação e Marketing Ltda", "siglaAgencia": "Escala", "cnpj": "90.771.544/0001-40", "licitacao": "2024/02", "contrato": "2025/14", "valorOriginal": 50000000.0, "valorAtualizado": 50000000.0, "inicioContratoOriginal": "19/02/2025", "limiteVigenciaTotal": "19/02/2030", "inicioVigenciaAtual": "19/02/2026", "terminoVigenciaAtual": "18/02/2027", "custosInternos": "30%", "repasseDescontoPadrao": "6%", "honorariosSemDescontoVeiculo": "4%", "honorariosPesquisaAvaliacao": "3%", "honorariosRenovacaoDireitoAutoral": "3%", "honorariosReimpressaoPecas": "3%", "honorariosFormasInovadoras": "sem previsão contratual", "honorariosPlataformasDigitais": "10%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco da Amazônia", "sigla": "BASA", "agencia": "Calix Propaganda LTDA", "siglaAgencia": "Calix", "cnpj": "05.8933.556/0001-78", "licitacao": "2024/02", "contrato": "2025/13", "valorOriginal": 50000000.0, "valorAtualizado": 50000000.0, "inicioContratoOriginal": "19/02/2025", "limiteVigenciaTotal": "18/02/2030", "inicioVigenciaAtual": "19/02/2026", "terminoVigenciaAtual": "18/02/2027", "custosInternos": "30%", "repasseDescontoPadrao": "6%", "honorariosSemDescontoVeiculo": "4%", "honorariosPesquisaAvaliacao": "3%", "honorariosRenovacaoDireitoAutoral": "3%", "honorariosReimpressaoPecas": "3%", "honorariosFormasInovadoras": "sem previsão contratual", "honorariosPlataformasDigitais": "10%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco do Brasil S/A", "sigla": "BB", "agencia": "McCann-Erickson Publicidade Ltda", "siglaAgencia": "Wmccann", "cnpj": "61.416.384/0001-12", "licitacao": "2023/04275", "contrato": "202485580025", "valorOriginal": 750000000.0, "valorAtualizado": 750000000.0, "inicioContratoOriginal": "28/06/2024", "limiteVigenciaTotal": "28/06/2029", "inicioVigenciaAtual": "28/06/2025", "terminoVigenciaAtual": "27/06/2026", "custosInternos": "Sem previsão contratual", "repasseDescontoPadrao": "6,50%", "honorariosSemDescontoVeiculo": "15%", "honorariosPesquisaAvaliacao": "sem previsão contratual", "honorariosRenovacaoDireitoAutoral": "sem previsão contratual", "honorariosReimpressaoPecas": "sem previsão contratual", "honorariosFormasInovadoras": "15%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco do Brasil S/A", "sigla": "BB", "agencia": "Agência Nacional", "siglaAgencia": "Agência Nacional", "cnpj": "61.704.482/0004-06", "licitacao": "2023/04275", "contrato": "20245580023", "valorOriginal": 750000000.0, "valorAtualizado": 750000000.0, "inicioContratoOriginal": "28/06/2024", "limiteVigenciaTotal": "28/06/2029", "inicioVigenciaAtual": "28/06/2025", "terminoVigenciaAtual": "28/06/2026", "custosInternos": "Sem previsão contratual", "repasseDescontoPadrao": "6,50%", "honorariosSemDescontoVeiculo": "15%", "honorariosPesquisaAvaliacao": "sem previsão contratual", "honorariosRenovacaoDireitoAutoral": "sem previsão contratual", "honorariosReimpressaoPecas": "sem previsão contratual", "honorariosFormasInovadoras": "15%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco do Brasil S/A", "sigla": "BB", "agencia": "Nova S/B", "siglaAgencia": "Nova/SB", "cnpj": "57.118.929/0001-37", "licitacao": "2023/04275", "contrato": "202485580024", "valorOriginal": 750000000.0, "valorAtualizado": 750000000.0, "inicioContratoOriginal": "28/06/2024", "limiteVigenciaTotal": "28/06/2029", "inicioVigenciaAtual": "28/06/2025", "terminoVigenciaAtual": "27/06/2026", "custosInternos": "Sem previsão contratual", "repasseDescontoPadrao": "6,50%", "honorariosSemDescontoVeiculo": "15%", "honorariosPesquisaAvaliacao": "sem previsão contratual", "honorariosRenovacaoDireitoAutoral": "sem previsão contratual", "honorariosReimpressaoPecas": "sem previsão contratual", "honorariosFormasInovadoras": "15%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco do Brasil S/A", "sigla": "BB", "agencia": "Lew'Lara Tbwa Publicidade e Propaganda Ltda", "siglaAgencia": "Lew'Lara/TBWA", "cnpj": "09.251.692/0001-15", "licitacao": "2023/04275(8558)", "contrato": "202485580026", "valorOriginal": 750000000.0, "valorAtualizado": 750000000.0, "inicioContratoOriginal": "28/06/2024", "limiteVigenciaTotal": "28/06/2029", "inicioVigenciaAtual": "28/06/2025", "terminoVigenciaAtual": "28/06/2026", "custosInternos": "Sem previsão contratual", "repasseDescontoPadrao": "6,50%", "honorariosSemDescontoVeiculo": "15%", "honorariosPesquisaAvaliacao": "sem previsão contratual", "honorariosRenovacaoDireitoAutoral": "sem previsão contratual", "honorariosReimpressaoPecas": "sem previsão contratual", "honorariosFormasInovadoras": "15%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco do Nordeste do Brasil S/A", "sigla": "BNB", "agencia": "View 360 Comunicação Integrada", "siglaAgencia": "View 360", "cnpj": "12.607.387/0001-28", "licitacao": "2023/110", "contrato": "2024/185", "valorOriginal": 60000000.0, "valorAtualizado": 60000000.0, "inicioContratoOriginal": "31/07/2024", "limiteVigenciaTotal": "30/07/2029", "inicioVigenciaAtual": "02/08/2025", "terminoVigenciaAtual": "01/08/2026", "custosInternos": "66.5%", "repasseDescontoPadrao": "6%", "honorariosSemDescontoVeiculo": "4.10%", "honorariosPesquisaAvaliacao": "3.80%", "honorariosRenovacaoDireitoAutoral": "3.80%", "honorariosReimpressaoPecas": "3.80%", "honorariosFormasInovadoras": "sem previsão contratual", "honorariosPlataformasDigitais": "12,5%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco do Nordeste do Brasil S/A", "sigla": "BNB", "agencia": "EBM Quinto Comunicão", "siglaAgencia": "EBM Quinto", "cnpj": "14.470.051/0001-91", "licitacao": "2023/110", "contrato": "2024/186", "valorOriginal": 60000000.0, "valorAtualizado": 60000000.0, "inicioContratoOriginal": "07/08/2024", "limiteVigenciaTotal": "30/07/2029", "inicioVigenciaAtual": "02/08/2025", "terminoVigenciaAtual": "01/08/2026", "custosInternos": "66.5%", "repasseDescontoPadrao": "6%", "honorariosSemDescontoVeiculo": "4.10%", "honorariosPesquisaAvaliacao": "3.80%", "honorariosRenovacaoDireitoAutoral": "3.80%", "honorariosReimpressaoPecas": "3.80%", "honorariosFormasInovadoras": "sem previsão contratual", "honorariosPlataformasDigitais": "12,5%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco Nacional de Desenvolvimento Econômico e Social", "sigla": "BNDES", "agencia": "Artplan Comunicação", "siglaAgencia": "Artplan", "cnpj": "33.673.286/0001-25", "licitacao": "01/2020", "contrato": "074/2023", "valorOriginal": 75000000.0, "valorAtualizado": 93750000.0, "inicioContratoOriginal": "06/04/2023", "limiteVigenciaTotal": "18/02/2027", "inicioVigenciaAtual": "19/03/2026", "terminoVigenciaAtual": "18/02/2027", "custosInternos": "0%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "5%", "honorariosPesquisaAvaliacao": "4%", "honorariosRenovacaoDireitoAutoral": "4%", "honorariosReimpressaoPecas": "4%", "honorariosFormasInovadoras": "4%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Banco Nacional de Desenvolvimento Econômico e Social", "sigla": "BNDES", "agencia": "MacCann Erickson", "siglaAgencia": "Maccann", "cnpj": "61.416.384/0001-12", "licitacao": "01/2020", "contrato": "029/2021", "valorOriginal": 75000000.0, "valorAtualizado": 93750000.0, "inicioContratoOriginal": "24/02/2021", "limiteVigenciaTotal": "23/02/2027", "inicioVigenciaAtual": "24/02/2026", "terminoVigenciaAtual": "23/02/2027", "custosInternos": "0%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "5%", "honorariosPesquisaAvaliacao": "4%", "honorariosRenovacaoDireitoAutoral": "4%", "honorariosReimpressaoPecas": "4%", "honorariosFormasInovadoras": "4%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Caixa Econômica Federal", "sigla": "CAIXA", "agencia": "Propeg Comunicação Ltda", "siglaAgencia": "Propeg", "cnpj": "05.428.409/0001-27", "licitacao": "0345/5688-2021", "contrato": "7392/2021", "valorOriginal": 374550000.0, "valorAtualizado": 468187500.0, "inicioContratoOriginal": "05/11/2021", "limiteVigenciaTotal": "04/11/2026", "inicioVigenciaAtual": "05/11/2025", "terminoVigenciaAtual": "04/11/2026", "custosInternos": "0%", "repasseDescontoPadrao": "6,5% (1/2 p/ descontos similares)", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1,50%", "honorariosRenovacaoDireitoAutoral": "1,50%", "honorariosReimpressaoPecas": "1,50%", "honorariosFormasInovadoras": "5%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Caixa Econômica Federal", "sigla": "CAIXA", "agencia": "Calia/Y2 Propaganda e Marketing Ltda", "siglaAgencia": "Calya2", "cnpj": "04.784.569/0001-46", "licitacao": "0345/5688-2021", "contrato": "7390/2021", "valorOriginal": 374550000.0, "valorAtualizado": 468187500.0, "inicioContratoOriginal": "05/11/2021", "limiteVigenciaTotal": "04/11/2026", "inicioVigenciaAtual": "05/11/2025", "terminoVigenciaAtual": "04/11/2026", "custosInternos": "0%", "repasseDescontoPadrao": "6,5% (1/2 p/ descontos similares)", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1,50%", "honorariosRenovacaoDireitoAutoral": "1,50%", "honorariosReimpressaoPecas": "1,50%", "honorariosFormasInovadoras": "5%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Caixa Econômica Federal", "sigla": "CAIXA", "agencia": "Binder + FC Comunicação Ltda", "siglaAgencia": "Binder", "cnpj": "72.190.242/0003-68", "licitacao": "0345/5688-2021", "contrato": "7387/2021", "valorOriginal": 374550000.0, "valorAtualizado": 468187500.0, "inicioContratoOriginal": "05/11/2021", "limiteVigenciaTotal": "04/11/2026", "inicioVigenciaAtual": "05/11/2025", "terminoVigenciaAtual": "04/11/2026", "custosInternos": "0%", "repasseDescontoPadrao": "6,5% (1/2 p/ descontos similares)", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1,50%", "honorariosRenovacaoDireitoAutoral": "1,50%", "honorariosReimpressaoPecas": "1,50%", "honorariosFormasInovadoras": "5%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Eletronuclear - Eletronuclear", "sigla": "Eletronuclear", "agencia": "Lume Comunicação Eireli", "siglaAgencia": "Lume Comunicação", "cnpj": "65.146.375/0001-00", "licitacao": "007/2024", "contrato": "3000279953", "valorOriginal": 4000000.0, "valorAtualizado": 4000000.0, "inicioContratoOriginal": "22/10/2025", "limiteVigenciaTotal": "21/10/2030", "inicioVigenciaAtual": "22/10/2025", "terminoVigenciaAtual": "22/10/2026", "custosInternos": "70%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "7%", "honorariosPesquisaAvaliacao": "5%", "honorariosRenovacaoDireitoAutoral": "5%", "honorariosReimpressaoPecas": "5%", "honorariosFormasInovadoras": "5%", "honorariosPlataformasDigitais": "Sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Empresa Brasileira de Infraestrutura Aeroportuária - Infraero", "sigla": "INFRAERO", "agencia": "Escala Comunicação e Marketing Ltda", "siglaAgencia": "Esca la", "cnpj": "90.771.544/0001-40", "licitacao": "123/2024", "contrato": "0136-PS/2025/0001", "valorOriginal": 7000000.0, "valorAtualizado": 7000000.0, "inicioContratoOriginal": "01/10/2025", "limiteVigenciaTotal": "01/10/2030", "inicioVigenciaAtual": "11/11/2025", "terminoVigenciaAtual": "10/11/2026", "custosInternos": "60%", "repasseDescontoPadrao": "25%", "honorariosSemDescontoVeiculo": "5%", "honorariosPesquisaAvaliacao": "4%", "honorariosRenovacaoDireitoAutoral": "4%", "honorariosReimpressaoPecas": "4%", "honorariosFormasInovadoras": "4%", "honorariosPlataformasDigitais": "Sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Empresa Brasileira de Infraestrutura Aeroportuária - Infraero", "sigla": "INFRAERO", "agencia": "VIEW 360 Comunicação Integrada", "siglaAgencia": "VIEW 360", "cnpj": "12.607.387/0001-28", "licitacao": "123/2024", "contrato": "TC0137-PS/2025/0001", "valorOriginal": 7000000.0, "valorAtualizado": 7000000.0, "inicioContratoOriginal": "01/10/2025", "limiteVigenciaTotal": "01/10/2030", "inicioVigenciaAtual": "11/11/2025", "terminoVigenciaAtual": "10/11/2026", "custosInternos": "60%", "repasseDescontoPadrao": "25%", "honorariosSemDescontoVeiculo": "5%", "honorariosPesquisaAvaliacao": "4%", "honorariosRenovacaoDireitoAutoral": "4%", "honorariosReimpressaoPecas": "4%", "honorariosFormasInovadoras": "4%", "honorariosPlataformasDigitais": "Sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Instituto Federal Catarinense - IFC", "sigla": "IFC", "agencia": "Arkus Propaganda", "siglaAgencia": "Arkus Propaganda", "cnpj": "20.491.368/0001-07", "licitacao": "001/2023", "contrato": "18/2024", "valorOriginal": 160000.0, "valorAtualizado": 160000.0, "inicioContratoOriginal": "24/01/2024", "limiteVigenciaTotal": "23/01/2029", "inicioVigenciaAtual": "27/10/2025", "terminoVigenciaAtual": "31/05/2027", "custosInternos": "30%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "4%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Instituto Federal de Educação, Ciência e Tecnologia de Santa Catarina", "sigla": "IFSC", "agencia": "Jsmax Publicidade e Propaganda Ltda", "siglaAgencia": "Jsmax", "cnpj": "07.895.771/0001-33", "licitacao": "01/2020", "contrato": "89/2020", "valorOriginal": 700000.0, "valorAtualizado": 700000.0, "inicioContratoOriginal": "19/11/2020", "limiteVigenciaTotal": "20/11/2025", "inicioVigenciaAtual": "19/11/2025", "terminoVigenciaAtual": "19/11/2026", "custosInternos": "40%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "0%", "honorariosPesquisaAvaliacao": "0%", "honorariosRenovacaoDireitoAutoral": "0%", "honorariosReimpressaoPecas": "0%", "honorariosFormasInovadoras": "0%", "honorariosPlataformasDigitais": "Sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "sem previsão contratual"}, {"orgao": "Instituto Federal de Educação, Ciência e Tecnologia do Sul de Minas -", "sigla": "IFSULDEMINAS", "agencia": "Arkus Propaganda", "siglaAgencia": "Arkus Propaganda", "cnpj": "20.491.368/0001-07", "licitacao": "01/2023", "contrato": "25/2023", "valorOriginal": 400000.0, "valorAtualizado": 400000.0, "inicioContratoOriginal": "04/08/2023", "limiteVigenciaTotal": "03/08/2028", "inicioVigenciaAtual": "03/08/2025", "terminoVigenciaAtual": "03/08/2026", "custosInternos": "70%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "8%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Instituto Nacional de Metrologia, Qualidade e Tecnologia", "sigla": "INMETRO", "agencia": "Binder Comunicação", "siglaAgencia": "Binder", "cnpj": "72.190.242/0003-68", "licitacao": "07/2024", "contrato": "001/2025", "valorOriginal": 40000000.0, "valorAtualizado": 40000000.0, "inicioContratoOriginal": "20/01/2025", "limiteVigenciaTotal": "20/01/2035", "inicioVigenciaAtual": "13/01/2026", "terminoVigenciaAtual": "13/01/2027", "custosInternos": "0%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "1,9%", "honorariosPesquisaAvaliacao": "1,9%", "honorariosRenovacaoDireitoAutoral": "0", "honorariosReimpressaoPecas": "0", "honorariosFormasInovadoras": "1,4%", "honorariosPlataformasDigitais": "14%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Instituto Nacional de Metrologia, Qualidade e Tecnologia", "sigla": "INMETRO", "agencia": "Puxe Comunicação", "siglaAgencia": "Puxe", "cnpj": "05.022.978/0001-78", "licitacao": "07/2024", "contrato": "24/2024", "valorOriginal": 40000000.0, "valorAtualizado": 40000000.0, "inicioContratoOriginal": "11/11/2024", "limiteVigenciaTotal": "11/11/2034", "inicioVigenciaAtual": "08/11/2025", "terminoVigenciaAtual": "07/11/2026", "custosInternos": "0%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "1,9%", "honorariosPesquisaAvaliacao": "1,9%", "honorariosRenovacaoDireitoAutoral": "0", "honorariosReimpressaoPecas": "0", "honorariosFormasInovadoras": "1,4%", "honorariosPlataformasDigitais": "14%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Educação", "sigla": "MEC", "agencia": "Debrito Brasil Comunicação LTDA", "siglaAgencia": "Debrito", "cnpj": "00.000.424/0003-18", "licitacao": "90003/2024", "contrato": "17/2026", "valorOriginal": 46666666.56, "valorAtualizado": 46666666.56, "inicioContratoOriginal": "19/05/2026", "limiteVigenciaTotal": "18/05/2036", "inicioVigenciaAtual": "19/05/2026", "terminoVigenciaAtual": "18/05/2027", "custosInternos": "5%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "3%", "honorariosPesquisaAvaliacao": "0,8%", "honorariosRenovacaoDireitoAutoral": "0,8%", "honorariosReimpressaoPecas": "0,8%", "honorariosFormasInovadoras": "13%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Educação", "sigla": "MEC", "agencia": "Calia Y2 Propaganda e Marketing LTDA", "siglaAgencia": "Calya2", "cnpj": "04.784.569/0002-27", "licitacao": "90003/2024", "contrato": "19/2026", "valorOriginal": 46666666.56, "valorAtualizado": 46666666.56, "inicioContratoOriginal": "19/05/2026", "limiteVigenciaTotal": "19/05/2036", "inicioVigenciaAtual": "20/05/2026", "terminoVigenciaAtual": "19/05/2027", "custosInternos": "5%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "3%", "honorariosPesquisaAvaliacao": "0,8%", "honorariosRenovacaoDireitoAutoral": "0,8%", "honorariosReimpressaoPecas": "0,8%", "honorariosFormasInovadoras": "13%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Educação", "sigla": "MEC", "agencia": "S.A. Propaganda LTDA", "siglaAgencia": "S.A. Propaganda", "cnpj": "02.967.456/0001-50", "licitacao": "90003/2025", "contrato": "18/2026", "valorOriginal": 46666666.56, "valorAtualizado": 46666666.56, "inicioContratoOriginal": "20/05/2026", "limiteVigenciaTotal": "20/05/2036", "inicioVigenciaAtual": "21/05/2026", "terminoVigenciaAtual": "20/05/2027", "custosInternos": "5%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "3%", "honorariosPesquisaAvaliacao": "0,8%", "honorariosRenovacaoDireitoAutoral": "0,8%", "honorariosReimpressaoPecas": "0,8%", "honorariosFormasInovadoras": "13%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Integração e Desenvolvimento Regional", "sigla": "MDR", "agencia": "Agência Nacional de Propaganda LTDA", "siglaAgencia": "Agência Nacional", "cnpj": "61.704.482/0004-06", "licitacao": "01/2021", "contrato": "62/2021", "valorOriginal": 55000000.0, "valorAtualizado": 55000000.0, "inicioContratoOriginal": "15/12/2021", "limiteVigenciaTotal": "14/12/2026", "inicioVigenciaAtual": "16/12/2025", "terminoVigenciaAtual": "15/12/2026", "custosInternos": "64%", "repasseDescontoPadrao": "5%", "honorariosSemDescontoVeiculo": "5%", "honorariosPesquisaAvaliacao": "4,2%", "honorariosRenovacaoDireitoAutoral": "4,2%", "honorariosReimpressaoPecas": "4,2%", "honorariosFormasInovadoras": "3,3%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Integração e Desenvolvimento Regional", "sigla": "MDR", "agencia": "Cálix Comunicação e Publicidade LTDA", "siglaAgencia": "Cálix", "cnpj": "05.893.556/001-78", "licitacao": "01/2021", "contrato": "63/2021", "valorOriginal": 55000000.0, "valorAtualizado": 55000000.0, "inicioContratoOriginal": "15/12/2021", "limiteVigenciaTotal": "14/12/2026", "inicioVigenciaAtual": "16/12/2025", "terminoVigenciaAtual": "15/12/2026", "custosInternos": "64%", "repasseDescontoPadrao": "5%", "honorariosSemDescontoVeiculo": "5%", "honorariosPesquisaAvaliacao": "4,2%", "honorariosRenovacaoDireitoAutoral": "4,2%", "honorariosReimpressaoPecas": "4,2%", "honorariosFormasInovadoras": "3,3%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Pesca e Aquicultura -", "sigla": "MPA", "agencia": "RXZ COMUNICACAO E PUBLICIDADE", "siglaAgencia": "RXZ", "cnpj": "07.760.975/0001-67", "licitacao": "001/2024", "contrato": "06/25", "valorOriginal": 19819560.0, "valorAtualizado": 19819560.0, "inicioContratoOriginal": "07/11/2025", "limiteVigenciaTotal": "10/07/2035", "inicioVigenciaAtual": "07/11/2025", "terminoVigenciaAtual": "06/11/2026", "custosInternos": "10%", "repasseDescontoPadrao": "25%", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "2%", "honorariosRenovacaoDireitoAutoral": "2%", "honorariosReimpressaoPecas": "2%", "honorariosFormasInovadoras": "15%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Saúde", "sigla": "MS", "agencia": "Calia/Y2 Propaganda e Marketing Ltda", "siglaAgencia": "Calya2", "cnpj": "04.784.569/0002-27", "licitacao": "15/2022", "contrato": "05/2023", "valorOriginal": 215000000.0, "valorAtualizado": 260000769.15, "inicioContratoOriginal": "26/01/2023", "limiteVigenciaTotal": "26/01/2028", "inicioVigenciaAtual": "26/01/2026", "terminoVigenciaAtual": "25/01/2027", "custosInternos": "sem previsão contratual", "repasseDescontoPadrao": "5,50%", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1,50%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Saúde", "sigla": "MS", "agencia": "Agência Nacional", "siglaAgencia": "Agência Nacional", "cnpj": "61.704.482/0004-06", "licitacao": "15/2022", "contrato": "03/2023", "valorOriginal": 215000000.0, "valorAtualizado": 260000769.15, "inicioContratoOriginal": "26/01/2023", "limiteVigenciaTotal": "26/01/2028", "inicioVigenciaAtual": "26/01/2026", "terminoVigenciaAtual": "25/01/2027", "custosInternos": "sem previsão contratual", "repasseDescontoPadrao": "5.5%", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1,50%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Saúde", "sigla": "MS", "agencia": "Nova/SB Comunicação Ltda", "siglaAgencia": "Nova/SB", "cnpj": "57.118.929/0001-37", "licitacao": "15/2022", "contrato": "02/2023", "valorOriginal": 215000000.0, "valorAtualizado": 260000769.15, "inicioContratoOriginal": "26/01/2023", "limiteVigenciaTotal": "26/01/2028", "inicioVigenciaAtual": "26/01/2026", "terminoVigenciaAtual": "25/01/2027", "custosInternos": "sem previsão contratual", "repasseDescontoPadrao": "5,50%", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1,50%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério da Saúde", "sigla": "MS", "agencia": "Debrito Propaganda", "siglaAgencia": "Debrito", "cnpj": "00.000.424/0003-18", "licitacao": "15/2022", "contrato": "04/2023", "valorOriginal": 215000000.0, "valorAtualizado": 260000769.15, "inicioContratoOriginal": "26/01/2023", "limiteVigenciaTotal": "26/01/2028", "inicioVigenciaAtual": "26/01/2026", "terminoVigenciaAtual": "25/01/2027", "custosInternos": "sem previsão contratual", "repasseDescontoPadrao": "5,50%", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1,50%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério das Comunicações", "sigla": "MCOM", "agencia": "Caveat Comunicação LTDA", "siglaAgencia": "Caveat", "cnpj": "05.035.843/0001-47", "licitacao": "90003/2024", "contrato": "24/2024", "valorOriginal": 25000000.0, "valorAtualizado": 25000000.0, "inicioContratoOriginal": "19/12/2024", "limiteVigenciaTotal": "18/12/2034", "inicioVigenciaAtual": "20/12/2025", "terminoVigenciaAtual": "17/12/2026", "custosInternos": "67%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "4,4%", "honorariosPesquisaAvaliacao": "2,4%", "honorariosRenovacaoDireitoAutoral": "2,4%", "honorariosReimpressaoPecas": "2,4%", "honorariosFormasInovadoras": "1,8%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério das Comunicações", "sigla": "MCOM", "agencia": "Companhia de Comunicação e Publicidade Ltda", "siglaAgencia": "Companhia", "cnpj": "69.277.291/0001-66", "licitacao": "90003/2024", "contrato": "25/2024", "valorOriginal": 25000000.0, "valorAtualizado": 25000000.0, "inicioContratoOriginal": "19/12/2024", "limiteVigenciaTotal": "18/12/2034", "inicioVigenciaAtual": "20/12/2025", "terminoVigenciaAtual": "19/12/2026", "custosInternos": "67%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "4,4%", "honorariosPesquisaAvaliacao": "2,4%", "honorariosRenovacaoDireitoAutoral": "2,4%", "honorariosReimpressaoPecas": "2,4%", "honorariosFormasInovadoras": "1,8%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome", "sigla": "MDS/MCIDADANIA", "agencia": "Fields Comunicação Ltda", "siglaAgencia": "Fields", "cnpj": "03.509.498/0001-00", "licitacao": "01/2022", "contrato": "29/2022", "valorOriginal": 120000000.0, "valorAtualizado": 120000000.0, "inicioContratoOriginal": "02/09/2022", "limiteVigenciaTotal": "01/09/2027", "inicioVigenciaAtual": "03/09/2025", "terminoVigenciaAtual": "02/09/2026", "custosInternos": "59%", "repasseDescontoPadrao": "5%", "honorariosSemDescontoVeiculo": "3,60%", "honorariosPesquisaAvaliacao": "3,30%", "honorariosRenovacaoDireitoAutoral": "3,30%", "honorariosReimpressaoPecas": "3,30%", "honorariosFormasInovadoras": "2,80%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome", "sigla": "MDS/MCIDADANIA", "agencia": "Agência Nacional de Propaganda Ltda", "siglaAgencia": "Agência Nacional", "cnpj": "61.704.482/0004-06", "licitacao": "01/2022", "contrato": "30/2022", "valorOriginal": 120000000.0, "valorAtualizado": 120000000.0, "inicioContratoOriginal": "02/09/2022", "limiteVigenciaTotal": "01/09/2027", "inicioVigenciaAtual": "03/09/2025", "terminoVigenciaAtual": "02/09/2026", "custosInternos": "59%", "repasseDescontoPadrao": "5%", "honorariosSemDescontoVeiculo": "3,60%", "honorariosPesquisaAvaliacao": "3,30%", "honorariosRenovacaoDireitoAutoral": "3,30%", "honorariosReimpressaoPecas": "3,30%", "honorariosFormasInovadoras": "2,80%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério do Desenvolvimento e Assistência Social, Família e Combate à Fome", "sigla": "MDS/MCIDADANIA", "agencia": "Mene e Portella Publicidade LTDA", "siglaAgencia": "Mene e Portella", "cnpj": "08.530.304/0001-72", "licitacao": "01/2022", "contrato": "31/2022", "valorOriginal": 120000000.0, "valorAtualizado": 120000000.0, "inicioContratoOriginal": "02/09/2022", "limiteVigenciaTotal": "01/09/2027", "inicioVigenciaAtual": "03/09/2025", "terminoVigenciaAtual": "02/09/2026", "custosInternos": "59%", "repasseDescontoPadrao": "5%", "honorariosSemDescontoVeiculo": "3,60%", "honorariosPesquisaAvaliacao": "3,30%", "honorariosRenovacaoDireitoAutoral": "3,30%", "honorariosReimpressaoPecas": "3,30%", "honorariosFormasInovadoras": "2,80%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério do Turismo", "sigla": "MTUR", "agencia": "Debrito Brasil Comunicação LTDA", "siglaAgencia": "Debrito", "cnpj": "00.000.424/0003-18", "licitacao": "90004/2024", "contrato": "24/25", "valorOriginal": 57574456.0, "valorAtualizado": 57574456.0, "inicioContratoOriginal": "27/06/2025", "limiteVigenciaTotal": "26/05/2035", "inicioVigenciaAtual": "27/06/2025", "terminoVigenciaAtual": "26/06/2026", "custosInternos": "0%", "repasseDescontoPadrao": "25%", "honorariosSemDescontoVeiculo": "4%", "honorariosPesquisaAvaliacao": "3,5%", "honorariosRenovacaoDireitoAutoral": "3,5%", "honorariosReimpressaoPecas": "3,5%", "honorariosFormasInovadoras": "3%", "honorariosPlataformasDigitais": "14,5%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério do Turismo", "sigla": "MTUR", "agencia": "Mene E Portella Publicidade LTDA", "siglaAgencia": "Mene e Portella", "cnpj": "08.530.304/0001-72", "licitacao": "90004/2024", "contrato": "25/25", "valorOriginal": 57574456.0, "valorAtualizado": 57574456.0, "inicioContratoOriginal": "02/06/2025", "limiteVigenciaTotal": "27/05/2035", "inicioVigenciaAtual": "28/06/2025", "terminoVigenciaAtual": "27/06/2026", "custosInternos": "0%", "repasseDescontoPadrao": "25%", "honorariosSemDescontoVeiculo": "4%", "honorariosPesquisaAvaliacao": "3,5%", "honorariosRenovacaoDireitoAutoral": "3,5%", "honorariosReimpressaoPecas": "3,5%", "honorariosFormasInovadoras": "3%", "honorariosPlataformasDigitais": "14,5%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Ministério dos Transportes", "sigla": "Ministério dos Transportes", "agencia": "Calix Propaganda LTDA", "siglaAgencia": "Calix", "cnpj": "05.893.556/0001-78", "licitacao": "01/2021", "contrato": "01/2023", "valorOriginal": 14966123.0, "valorAtualizado": 14966123.0, "inicioContratoOriginal": "14/04/2023", "limiteVigenciaTotal": "14/04/2029", "inicioVigenciaAtual": "15/04/2025", "terminoVigenciaAtual": "14/04/2026", "custosInternos": "0%", "repasseDescontoPadrao": "5%", "honorariosSemDescontoVeiculo": "0", "honorariosPesquisaAvaliacao": "0", "honorariosRenovacaoDireitoAutoral": "0", "honorariosReimpressaoPecas": "0", "honorariosFormasInovadoras": "0", "honorariosPlataformasDigitais": "sem pevisão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Petróleo Brasileiro S/A", "sigla": "PETROBRAS", "agencia": "Ogilvy & Mather Brasil Comunicação LTDA", "siglaAgencia": "Ogilvy & Mather", "cnpj": "61.067.492/0001-27", "licitacao": "7003756373", "contrato": "5900.0121742.22.2", "valorOriginal": 375000000.0, "valorAtualizado": 93750000.0, "inicioContratoOriginal": "04/08/2022", "limiteVigenciaTotal": "23/01/2025", "inicioVigenciaAtual": "24/01/2025", "terminoVigenciaAtual": "12/07/2027", "custosInternos": "sem previsão contratual", "repasseDescontoPadrao": "50%", "honorariosSemDescontoVeiculo": "1,5%", "honorariosPesquisaAvaliacao": "1,50%", "honorariosRenovacaoDireitoAutoral": "1,50%", "honorariosReimpressaoPecas": "1,50%", "honorariosFormasInovadoras": "1,50%", "honorariosPlataformasDigitais": "9%", "reutilizacaoDireitosPatrimoniais": "caso a caso", "reutilizacaoObrasConsagradas": "caso a caso"}, {"orgao": "Petróleo Brasileiro S/A", "sigla": "PETROBRAS", "agencia": "Propeg Comunicação Ltda", "siglaAgencia": "Propeg", "cnpj": "05.428.409/0007-12,", "licitacao": "7003756373", "contrato": "5900.0119490.21.2", "valorOriginal": 375000000.0, "valorAtualizado": 93750000.0, "inicioContratoOriginal": "04/08/2022", "limiteVigenciaTotal": "23/01/2025", "inicioVigenciaAtual": "24/01/2025", "terminoVigenciaAtual": "12/07/2027", "custosInternos": "sem previsão contratual", "repasseDescontoPadrao": "50%", "honorariosSemDescontoVeiculo": "1,5%", "honorariosPesquisaAvaliacao": "1,50%", "honorariosRenovacaoDireitoAutoral": "1,50%", "honorariosReimpressaoPecas": "1,50%", "honorariosFormasInovadoras": "1,50%", "honorariosPlataformasDigitais": "9%", "reutilizacaoDireitosPatrimoniais": "caso a caso", "reutilizacaoObrasConsagradas": "caso a caso"}, {"orgao": "Secretaria de Comunicação Social da Presidência da República", "sigla": "SECOM", "agencia": "Calia/Y2 Propaganda e Marketing Ltda", "siglaAgencia": "Calya2", "cnpj": "04.784.569/0002-27", "licitacao": "01/2021", "contrato": "51/2022", "valorOriginal": 450000000.0, "valorAtualizado": 562500000.0, "inicioContratoOriginal": "25/05/2022", "limiteVigenciaTotal": "25/05/2027", "inicioVigenciaAtual": "26/05/2026", "terminoVigenciaAtual": "25/05/2027", "custosInternos": "0%", "repasseDescontoPadrao": "5,5%", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1,5%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Secretaria de Comunicação Social da Presidência da República", "sigla": "SECOM", "agencia": "Nova/SB Comunicação Ltda", "siglaAgencia": "Nova/SB", "cnpj": "57.118.929/0001-37", "licitacao": "01/2021", "contrato": "52/2022", "valorOriginal": 450000000.0, "valorAtualizado": 562500000.0, "inicioContratoOriginal": "25/05/2022", "limiteVigenciaTotal": "25/05/2027", "inicioVigenciaAtual": "26/05/2026", "terminoVigenciaAtual": "25/05/2027", "custosInternos": "0%", "repasseDescontoPadrao": "5,5%", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1,5%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Secretaria de Comunicação Social da Presidência da República", "sigla": "SECOM", "agencia": "Agência Nacional de Propaganda Ltda", "siglaAgencia": "Agência Nacional", "cnpj": "61.704.482/0004-06", "licitacao": "01/2021", "contrato": "53/2022", "valorOriginal": 450000000.0, "valorAtualizado": 562500000.0, "inicioContratoOriginal": "25/05/2022", "limiteVigenciaTotal": "25/05/2027", "inicioVigenciaAtual": "26/05/2026", "terminoVigenciaAtual": "25/05/2027", "custosInternos": "0%", "repasseDescontoPadrao": "5,5%", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1,5%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Secretaria de Comunicação Social da Presidência da República", "sigla": "SECOM", "agencia": "Propeg Comunicação Ltda", "siglaAgencia": "Propeg", "cnpj": "05.428.409/0003-99", "licitacao": "01/2021", "contrato": "54/2022", "valorOriginal": 450000000.0, "valorAtualizado": 562500000.0, "inicioContratoOriginal": "25/05/2022", "limiteVigenciaTotal": "25/05/2027", "inicioVigenciaAtual": "26/05/2026", "terminoVigenciaAtual": "25/05/2027", "custosInternos": "0%", "repasseDescontoPadrao": "5,5%", "honorariosSemDescontoVeiculo": "2%", "honorariosPesquisaAvaliacao": "1%", "honorariosRenovacaoDireitoAutoral": "1%", "honorariosReimpressaoPecas": "1%", "honorariosFormasInovadoras": "1,5%", "honorariosPlataformasDigitais": "15%", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Serviço Federal de Processamento de Dados", "sigla": "SERPRO", "agencia": "Binder Reimagine", "siglaAgencia": "Binder", "cnpj": "72.190.242/0003-68", "licitacao": "90071/2024", "contrato": "212464", "valorOriginal": 20000000.0, "valorAtualizado": 20000000.0, "inicioContratoOriginal": "09/12/2024", "limiteVigenciaTotal": "09/12/2029", "inicioVigenciaAtual": "09/12/2024", "terminoVigenciaAtual": "08/12/2026", "custosInternos": "53%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "4%", "honorariosPesquisaAvaliacao": "3%", "honorariosRenovacaoDireitoAutoral": "3%", "honorariosReimpressaoPecas": "3%", "honorariosFormasInovadoras": "3%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Superintendência da Zona Franca de Manaus", "sigla": "SUFRAMA", "agencia": "Saga Publicidade LTDA", "siglaAgencia": "Saga", "cnpj": "04.239.158/0001-70", "licitacao": "66/2025", "contrato": "8/2026", "valorOriginal": 3000000.0, "valorAtualizado": 3000000.0, "inicioContratoOriginal": "09/06/2026", "limiteVigenciaTotal": "08/06/2036", "inicioVigenciaAtual": "09/06/2026", "terminoVigenciaAtual": "08/06/2027", "custosInternos": "66%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": "4,5%", "honorariosPesquisaAvaliacao": "2,5%", "honorariosRenovacaoDireitoAutoral": "2,5%", "honorariosReimpressaoPecas": "2,5%", "honorariosFormasInovadoras": "1,9%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}, {"orgao": "Universidade Federal de Mato Grosso do Sul", "sigla": "UFMS", "agencia": "Z3 Publicidade e Propaganda LTDA", "siglaAgencia": "Z3 Publicidade", "cnpj": "37.526.019/0002-67", "licitacao": "01/2024", "contrato": "152/2024", "valorOriginal": 5000000.0, "valorAtualizado": 5000000.0, "inicioContratoOriginal": "20/12/2024", "limiteVigenciaTotal": "20/12/2034", "inicioVigenciaAtual": "20/12/2025", "terminoVigenciaAtual": "19/12/2026", "custosInternos": "até 70%", "repasseDescontoPadrao": "1/4", "honorariosSemDescontoVeiculo": ">15%", "honorariosPesquisaAvaliacao": ">10%", "honorariosRenovacaoDireitoAutoral": ">10%", "honorariosReimpressaoPecas": ">10%", "honorariosFormasInovadoras": ">15%", "honorariosPlataformasDigitais": "sem previsão contratual", "reutilizacaoDireitosPatrimoniais": "até 50%", "reutilizacaoObrasConsagradas": "até 50%"}];
+
+const SERVICE_FIELDS = [
+  {key:'custosInternos', label:'Ressarcimento de custos internos (Tabela SINAPRO)', short:'Custos internos (SINAPRO)'},
+  {key:'repasseDescontoPadrao', label:'Repasse do Desconto-Padrão', short:'Repasse do Desconto-Padrão'},
+  {key:'honorariosSemDescontoVeiculo', label:'Honorários sobre serviços sem desconto do veículo', short:'Honorários s/ desconto do veículo'},
+  {key:'honorariosPesquisaAvaliacao', label:'Honorários sobre pesquisa e avaliação', short:'Pesquisa e avaliação'},
+  {key:'honorariosRenovacaoDireitoAutoral', label:'Honorários sobre renovação de direito autoral', short:'Renovação de direito autoral'},
+  {key:'honorariosReimpressaoPecas', label:'Honorários sobre reimpressão de peças', short:'Reimpressão de peças'},
+  {key:'honorariosFormasInovadoras', label:'Honorários sobre formas inovadoras de comunicação', short:'Formas inovadoras de comunicação'},
+  {key:'honorariosPlataformasDigitais', label:'Honorários sobre plataformas digitais', short:'Plataformas digitais'},
+  {key:'reutilizacaoDireitosPatrimoniais', label:'Reutilização — direitos patrimoniais de autor', short:'Reutilização — direitos patrimoniais'},
+  {key:'reutilizacaoObrasConsagradas', label:'Reutilização — obras consagradas', short:'Reutilização — obras consagradas'},
+];
+
+/* ---------- group agencies under the same órgão + licitação (same contract) ---------- */
+function buildGroups(){
+  const map = new Map();
+  const order = [];
+  DATA.forEach(d=>{
+    const key = d.orgao + '||' + d.licitacao;
+    if(!map.has(key)){
+      map.set(key, {...d, agencies: []});
+      order.push(key);
+    }
+    map.get(key).agencies.push({
+      agencia: d.agencia,
+      siglaAgencia: d.siglaAgencia,
+      cnpj: d.cnpj,
+      contrato: d.contrato,
+    });
+  });
+  return order.map(k=>map.get(k));
+}
+const GROUPS = buildGroups();
+
+const TODAY = new Date(2026,6,8); // 08/07/2026
+
+function parseBR(d){
+  if(!d) return null;
+  const [dd,mm,yyyy] = d.split('/').map(Number);
+  return new Date(yyyy, mm-1, dd);
+}
+function isVigente(rec){
+  const t = parseBR(rec.terminoVigenciaAtual);
+  return t ? t >= TODAY : true;
+}
+function fmtMoney(v){
+  if(v == null) return '—';
+  if(v >= 1e6){
+    const m = v/1e6;
+    return 'R$ ' + (Number.isInteger(m) ? m : m.toFixed(1).replace(/\.0$/,'')) + ' milhões';
+  }
+  return 'R$ ' + v.toLocaleString('pt-BR');
+}
+function fmtMoneyFull(v){
+  if(v == null) return '—';
+  return v.toLocaleString('pt-BR', {style:'currency', currency:'BRL', maximumFractionDigits:0});
+}
+function escapeHtml(s){
+  return (s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ---------- TABS ---------- */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.getElementById('tab-contratos').style.display = tab==='contratos' ? '' : 'none';
+    document.getElementById('tab-servicos').style.display = tab==='servicos' ? '' : 'none';
+  });
+});
+
+/* ---------- populate org filter (checkbox dropdown) ---------- */
+const orgs = [...new Set(DATA.map(d=>d.orgao))].sort((a,b)=>a.localeCompare(b,'pt'));
+const selectedOrgs = new Set();
+const orgFilterWrap = document.getElementById('orgFilterWrap');
+const orgFilterBtn = document.getElementById('orgFilterBtn');
+const orgFilterPanel = document.getElementById('orgFilterPanel');
+
+orgFilterPanel.innerHTML = `
+  <div class="ms-actions">
+    <button type="button" id="orgSelectAll">Selecionar todos</button>
+    <button type="button" id="orgClearAll">Limpar</button>
+  </div>
+  ${orgs.map(o=>`
+    <label class="ms-option">
+      <input type="checkbox" value="${escapeHtml(o)}">
+      <span>${escapeHtml(o)}</span>
+    </label>
+  `).join('')}
+`;
+
+function updateOrgFilterBtn(){
+  if(selectedOrgs.size === 0) orgFilterBtn.textContent = 'Todos os órgãos';
+  else if(selectedOrgs.size === 1) orgFilterBtn.textContent = [...selectedOrgs][0];
+  else orgFilterBtn.textContent = selectedOrgs.size + ' órgãos selecionados';
+}
+
+orgFilterPanel.querySelectorAll('.ms-option input').forEach(cb=>{
+  cb.addEventListener('change', ()=>{
+    if(cb.checked) selectedOrgs.add(cb.value);
+    else selectedOrgs.delete(cb.value);
+    updateOrgFilterBtn();
+    render();
+    renderServiceList();
+  });
+});
+
+document.getElementById('orgSelectAll').addEventListener('click', ()=>{
+  orgFilterPanel.querySelectorAll('.ms-option input').forEach(cb=>{ cb.checked = true; selectedOrgs.add(cb.value); });
+  updateOrgFilterBtn();
+  render();
+  renderServiceList();
+});
+document.getElementById('orgClearAll').addEventListener('click', ()=>{
+  orgFilterPanel.querySelectorAll('.ms-option input').forEach(cb=>{ cb.checked = false; });
+  selectedOrgs.clear();
+  updateOrgFilterBtn();
+  render();
+  renderServiceList();
+});
+
+orgFilterBtn.addEventListener('click', (e)=>{
+  e.stopPropagation();
+  orgFilterWrap.classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  if(!orgFilterWrap.contains(e.target)) orgFilterWrap.classList.remove('open');
+});
+
+/* ---------- populate value range filter ---------- */
+const VALUE_RANGES = [
+  {label:'Até R$ 1.000.000,00', min:-Infinity, max:1000000},
+  {label:'Entre R$ 1.000.000,01 e R$ 5.000.000,00', min:1000000, max:5000000},
+  {label:'Entre R$ 5.000.000,01 e R$ 10.000.000,00', min:5000000, max:10000000},
+  {label:'Entre R$ 10.000.000,01 e R$ 50.000.000,00', min:10000000, max:50000000},
+  {label:'Entre R$ 50.000.000,01 e R$ 100.000.000,00', min:50000000, max:100000000},
+  {label:'Entre R$ 100.000.000,01 e R$ 200.000.000,00', min:100000000, max:200000000},
+  {label:'Entre R$ 200.000.000,01 e R$ 500.000.000,00', min:200000000, max:500000000},
+  {label:'Acima de R$ 500.000.000,01', min:500000000, max:Infinity},
+];
+const valueSel = document.getElementById('valueFilter');
+VALUE_RANGES.forEach((r,i)=>{
+  const opt = document.createElement('option');
+  opt.value = i; opt.textContent = r.label;
+  valueSel.appendChild(opt);
+});
+
+/* ---------- populate service select ---------- */
+const svcSel = document.getElementById('serviceSelect');
+SERVICE_FIELDS.forEach(s=>{
+  const opt = document.createElement('option');
+  opt.value = s.key; opt.textContent = s.short;
+  svcSel.appendChild(opt);
+});
+
+/* ---------- KPIs ---------- */
+function renderKPIs(){
+  const total = GROUPS.reduce((a,g)=>a+(g.valorAtualizado||0),0);
+  const nOrgs = orgs.length;
+  const vigentes = GROUPS.filter(isVigente).length;
+
+  const kpis = [
+    {num: GROUPS.length, lbl:'Contratos no total'},
+    {num: (total/1e9).toFixed(2)+' bi', lbl:'Valor total atualizado (R$)'},
+    {num: nOrgs, lbl:'Órgãos/entidades'},
+    {num: vigentes, lbl:'Contratos vigentes hoje'},
+  ];
+  document.getElementById('kpis').innerHTML = kpis.map(k=>`
+    <div class="kpi"><div class="num">${k.num}</div><div class="lbl">${k.lbl}</div></div>
+  `).join('');
+}
+renderKPIs();
+
+/* ---------- CONTRATOS: render ---------- */
+function matchesSearch(g, q){
+  if(!q) return true;
+  q = q.toLowerCase();
+  if(g.orgao.toLowerCase().includes(q) || g.sigla.toLowerCase().includes(q)) return true;
+  return g.agencies.some(a=>
+    a.agencia.toLowerCase().includes(q) ||
+    a.siglaAgencia.toLowerCase().includes(q) ||
+    a.cnpj.includes(q)
+  );
+}
+
+function render(){
+  const q = document.getElementById('search').value.trim();
+  const status = document.getElementById('statusFilter').value;
+  const valueRange = document.getElementById('valueFilter').value;
+  const sort = document.getElementById('sortSelect').value;
+
+  let list = GROUPS.filter(g=>{
+    if(selectedOrgs.size && !selectedOrgs.has(g.orgao)) return false;
+    if(status === 'vigente' && !isVigente(g)) return false;
+    if(status === 'encerrado' && isVigente(g)) return false;
+    if(valueRange !== ''){
+      const r = VALUE_RANGES[+valueRange];
+      const v = g.valorOriginal || 0;
+      if(!(v > r.min && v <= r.max)) return false;
+    }
+    if(!matchesSearch(g,q)) return false;
+    return true;
+  });
+
+  if(sort === 'orgao') list.sort((a,b)=>a.orgao.localeCompare(b.orgao,'pt'));
+  if(sort === 'valorDesc') list.sort((a,b)=>(b.valorAtualizado||0)-(a.valorAtualizado||0));
+  if(sort === 'valorAsc') list.sort((a,b)=>(a.valorAtualizado||0)-(b.valorAtualizado||0));
+  if(sort === 'vencimento') list.sort((a,b)=>{
+    const ta = parseBR(a.terminoVigenciaAtual), tb = parseBR(b.terminoVigenciaAtual);
+    return (ta?ta.getTime():Infinity) - (tb?tb.getTime():Infinity);
+  });
+
+  document.getElementById('resultCount').textContent = list.length;
+  const grid = document.getElementById('grid');
+
+  if(list.length === 0){
+    grid.innerHTML = `<div class="empty">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#889199" stroke-width="1.6"/><path d="M16 16L21 21" stroke="#889199" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div>Nenhum contrato encontrado com esses filtros.</div>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map((g)=>{
+    const idx = GROUPS.indexOf(g);
+    return `
+    <div class="card" data-idx="${idx}">
+      <span class="card-expand">+</span>
+      <span class="badge">${escapeHtml(g.sigla)}</span>
+      <div>
+        <div class="card-title">${escapeHtml(g.orgao)}</div>
+        <div class="card-agency-list">
+          ${g.agencies.map(a=>`<div class="card-agency-item">${escapeHtml(a.siglaAgencia || a.agencia)}</div>`).join('')}
+        </div>
+      </div>
+      <div class="card-divider"></div>
+      <div class="card-bottom">
+        <div>
+          <div class="card-value-lbl">Valor atualizado</div>
+          <div class="card-value">${fmtMoney(g.valorAtualizado)}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  grid.querySelectorAll('.card').forEach(el=>{
+    el.addEventListener('click', ()=> openModal(GROUPS[+el.dataset.idx]));
+  });
+}
+
+/* ---------- SERVIÇOS: render ---------- */
+function renderServiceList(){
+  const key = svcSel.value;
+  const field = SERVICE_FIELDS.find(s=>s.key===key);
+  const q = document.getElementById('serviceSearch').value.trim().toLowerCase();
+  const mainQ = document.getElementById('search').value.trim();
+  const status = document.getElementById('statusFilter').value;
+  const valueRange = document.getElementById('valueFilter').value;
+
+  document.getElementById('serviceDescription').textContent =
+    `Mostrando a cláusula "${field.label}" para cada contrato.`;
+
+  let list = GROUPS.filter(g=>{
+    if(selectedOrgs.size && !selectedOrgs.has(g.orgao)) return false;
+    if(status === 'vigente' && !isVigente(g)) return false;
+    if(status === 'encerrado' && isVigente(g)) return false;
+    if(valueRange !== ''){
+      const r = VALUE_RANGES[+valueRange];
+      const v = g.valorOriginal || 0;
+      if(!(v > r.min && v <= r.max)) return false;
+    }
+    if(!matchesSearch(g, mainQ)) return false;
+    if(!q) return true;
+    if(g.orgao.toLowerCase().includes(q) || g.sigla.toLowerCase().includes(q)) return true;
+    return g.agencies.some(a=>
+      a.agencia.toLowerCase().includes(q) ||
+      a.siglaAgencia.toLowerCase().includes(q)
+    );
+  });
+
+  list = [...list].sort((a,b)=>a.orgao.localeCompare(b.orgao,'pt'));
+
+  document.getElementById('serviceResultCount').textContent = list.length;
+  const wrap = document.getElementById('serviceList');
+
+  if(list.length === 0){
+    wrap.innerHTML = `<div class="empty">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#889199" stroke-width="1.6"/><path d="M16 16L21 21" stroke="#889199" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <div>Nenhum órgão encontrado com essa busca.</div>
+    </div>`;
+    return;
+  }
+
+  wrap.innerHTML = list.map(g=>{
+    const idx = GROUPS.indexOf(g);
+    const val = g[key] || '—';
+    return `
+    <div class="service-row" data-idx="${idx}">
+      <span class="sr-badge">${escapeHtml(g.sigla)}</span>
+      <div class="sr-org">
+        <div class="name">${escapeHtml(g.orgao)}</div>
+      </div>
+      <div class="sr-value">
+        <div class="v">${escapeHtml(val)}</div>
+        <div class="lbl">${escapeHtml(field.short)}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  wrap.querySelectorAll('.service-row').forEach(el=>{
+    el.addEventListener('click', ()=> openModal(GROUPS[+el.dataset.idx]));
+  });
+}
+
+/* ---------- MODAL ---------- */
+function openModal(g){
+  const vig = isVigente(g);
+  const pctChips = SERVICE_FIELDS.map(s=>`
+    <div class="pct-chip"><div class="k">${escapeHtml(s.short)}</div><div class="v">${escapeHtml(g[s.key])||'—'}</div></div>
+  `).join('');
+  const agencyRows = g.agencies.map(a=>`
+    <div class="field"><div class="k">${escapeHtml(a.siglaAgencia || a.agencia)}</div><div class="v">Contrato ${escapeHtml(a.contrato)||'—'} · CNPJ ${escapeHtml(a.cnpj)||'—'}</div></div>
+  `).join('');
+
+  document.getElementById('modal').innerHTML = `
+    <div class="modal-head">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <span class="modal-badge">${escapeHtml(g.sigla)} · ${vig?'Vigente':'Encerrado'}</span>
+      <div class="modal-org">${escapeHtml(g.orgao)}</div>
+      <div class="modal-agency">${g.agencies.map(a=>escapeHtml(a.siglaAgencia || a.agencia)).join(' · ')}</div>
+    </div>
+    <div class="modal-body">
+      <div class="section-title">Agências</div>
+      <div class="field-grid">
+        ${agencyRows}
+      </div>
+
+      <div class="section-title">Identificação do contrato</div>
+      <div class="field-grid">
+        <div class="field"><div class="k">Nº da licitação</div><div class="v">${escapeHtml(g.licitacao)||'—'}</div></div>
+        <div class="field"><div class="k">Valor original do contrato</div><div class="v">${fmtMoneyFull(g.valorOriginal)}</div></div>
+        <div class="field"><div class="k">Valor do contrato atualizado</div><div class="v">${fmtMoneyFull(g.valorAtualizado)}</div></div>
+      </div>
+
+      <div class="section-title">Vigência</div>
+      <div class="field-grid">
+        <div class="field"><div class="k">Início do contrato original</div><div class="v">${g.inicioContratoOriginal||'—'}</div></div>
+        <div class="field"><div class="k">Limite vigência total</div><div class="v">${g.limiteVigenciaTotal||'—'}</div></div>
+        <div class="field"><div class="k">Início vigência atual</div><div class="v">${g.inicioVigenciaAtual||'—'}</div></div>
+        <div class="field"><div class="k">Término vigência atual</div><div class="v">${g.terminoVigenciaAtual||'—'}</div></div>
+      </div>
+
+      <div class="section-title">Serviços e remuneração</div>
+      <div class="pct-grid">
+        ${pctChips}
+      </div>
+    </div>
+  `;
+  document.getElementById('overlay').classList.add('open');
+}
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
+document.getElementById('overlay').addEventListener('click', e=>{
+  if(e.target.id === 'overlay') closeModal();
+});
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+['search','statusFilter','valueFilter'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', ()=>{ render(); renderServiceList(); });
+  document.getElementById(id).addEventListener('change', ()=>{ render(); renderServiceList(); });
+});
+document.getElementById('sortSelect').addEventListener('change', render);
+['serviceSelect','serviceSearch'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', renderServiceList);
+  document.getElementById(id).addEventListener('change', renderServiceList);
+});
+
+render();
+renderServiceList();
+</script>
+</body>
+</html>
